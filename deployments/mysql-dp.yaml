@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysqlBD-dp
+  labels:
+    app: mysql-app
+    type: database
+spec:
+  template:
+    metadata:
+      name: mysqlBD-pod
+      labels:
+        app: mysql-app
+        type: database
+    spec:
+      containers:
+      - name: mysqlBD
+        image: mysql:5.7
+        env:
+        - name: MYSQL_PASSWORD
+          value: root
+        - name: MYSQL_DATABASE
+          value: mysqldb
+        - name: MYSQL_USER
+          value: admin
+        ports:
+          - containerPort: 3306
+  selector:
+    matchLabels:
+      app: mysql-app
+  replicas: 1
